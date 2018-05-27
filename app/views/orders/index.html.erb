@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= link_to 'Show', order %></td>
+        <td><%= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="orders"></div>
+<br>
+<h2>New Meal Order</h2>
+<p>Name: <input type="text" name="name" id="name"></p>
+<p>Meal: <input type="text" name="meal" id="meal"></p>
+<button id="add-order">Add Order</button>
+<br>
+
+<%= link_to 'New Order', new_order_path %>
+<br>
+<%= params.inspect %>
+<script type="text/javascript">
+  $(document).ready(function(e){
+    
+     $('#add-order').on('click',function(){
+      
+      
+      $.ajax({
+        type: 'POST',
+        url: '/orders',
+        data: {
+          name: $('#name').val(),
+          meal: $('#meal').val(),
+        },
+        success: function(newOrder) {
+        alert('Order was successfully saved');
+        },
+        error: function(){
+          alert('Error saving order');
+        }
+      });
+     });
+
+  });
+</script>
